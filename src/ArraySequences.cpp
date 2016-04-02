@@ -64,7 +64,7 @@ int * find_sequences(int *arr, int len){
 				j++;
 			}
 			result[endIndex] = j;
-			i = j-1;
+			i = j;
 			endIndex = 3;
 			j = 0;
 			k = 0;
