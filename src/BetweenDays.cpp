@@ -27,8 +27,86 @@ struct node{
 	int data;
 	struct node *next;
 };
+struct date
+{
+	int d, m, y;
+};
+int leapCount(date d)
+{
+	int years = d.y;
+	
+	if (d.m <= 2)
+		years--;
+	
+	return (years / 4 - years / 100 + years / 400);
+}
+int countDays[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+int getNumberOfDays(date dt1, date dt2)
+{
+	long int n1 = dt1.y * 365 + dt1.d;
+	for (int i = 0; i<dt1.m - 1; i++)
+		n1 += countDays[i];
+	n1 += leapCount(dt1);
 
 
+	long int n2 = dt2.y * 365 + dt2.d;
+	for (int i = 0; i<dt2.m - 1; i++)
+		n2 += countDays[i];
+	n2 += leapCount(dt2);
+
+	return (n2 - n1 - 1);
+}
 int between_days(struct node *date1head, struct node *date2head){
-	return -1;
+	if (date1head==NULL||date2head==NULL)
+		return -1;
+	int index = 0;
+	int d1, m1, y1, d2, m2, y2;
+	d1 = d2 = m1 = m2 = y1 = y2 = 0;
+	struct node *temp;
+	temp = date1head;
+	while (temp != NULL)
+	{
+		if (index == 0 || index == 1)
+		{
+			d1 = d1 * 10 + temp->data;
+		}
+		if (index == 2 || index == 3)
+		{
+			m1 = m1 * 10 + temp->data;
+		}
+		if (index >= 4 && index <= 7)
+		{
+			y1 = y1 * 10 + temp->data;
+		}
+		index++;
+		temp = temp->next;
+
+	}
+	temp = date2head;
+	index = 0;
+	while (temp != NULL)
+	{
+		if (index == 0 || index == 1)
+		{
+			d2 = d2 * 10 + temp->data;
+		}
+		if (index == 2 || index == 3)
+		{
+			m2 = m2 * 10 + temp->data;
+		}
+		if (index >= 4 && index <= 7)
+		{
+			y2 = y2 * 10 + temp->data;
+		}
+		index++;
+		temp = temp->next;
+	}
+	struct date date1, date2;
+	date1.d = d1;
+	date1.m = m1;
+	date1.y = y1;
+	date2.d = d2;
+	date2.m = m2;
+	date2.y = y2;
+	return getNumberOfDays(date1, date2);
 }
