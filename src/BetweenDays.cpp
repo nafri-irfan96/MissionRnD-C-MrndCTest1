@@ -101,6 +101,10 @@ int between_days(struct node *date1head, struct node *date2head){
 		index++;
 		temp = temp->next;
 	}
+
+	if (d1 < 1 || d2 < 1 || d1>31 || d2>31 || m1 < 1 || m2 < 1 || m1>12 || m2>12)
+		return -1;
+
 	struct date date1, date2;
 	date1.d = d1;
 	date1.m = m1;
